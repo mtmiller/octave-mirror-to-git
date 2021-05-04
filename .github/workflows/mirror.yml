@@ -49,3 +49,6 @@ jobs:
 
       - name: Push to mirror on GitHub
         run: ./push.sh github ${{ secrets.REMOTE_URL_GITHUB }}
+
+      - name: Push to mirror on GitLab
+        run: ./push.sh gitlab ${{ secrets.REMOTE_URL_GITLAB }}
