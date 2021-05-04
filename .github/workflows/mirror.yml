@@ -42,13 +42,13 @@ jobs:
         run: sudo apt install libcurl4-gnutls-dev libpcre2-dev python3-dev zlib1g-dev
 
       - name: Initialize
-        run: ./init.sh
+        run: bash -ex init.sh
 
       - name: Pull
-        run: ./pull.sh
+        run: bash -ex pull.sh
 
       - name: Push to mirror on GitHub
-        run: ./push.sh github ${{ secrets.REMOTE_URL_GITHUB }}
+        run: bash -ex push.sh github ${{ secrets.REMOTE_URL_GITHUB }}
 
       - name: Push to mirror on GitLab
-        run: ./push.sh gitlab ${{ secrets.REMOTE_URL_GITLAB }}
+        run: bash -ex push.sh gitlab ${{ secrets.REMOTE_URL_GITLAB }}
