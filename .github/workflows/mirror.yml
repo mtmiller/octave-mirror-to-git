@@ -45,3 +45,6 @@ jobs:
 
       - name: Pull
         run: ./pull.sh
+
+      - name: Push to mirror on GitHub
+        run: ./push.sh github ${{ secrets.REMOTE_URL_GITHUB }}
