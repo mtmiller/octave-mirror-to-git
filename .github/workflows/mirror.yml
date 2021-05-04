@@ -1,0 +1,47 @@
+name: Update mirrors
+on:
+  schedule:
+    - cron: '0,30 * * * *'
+
+jobs:
+  mirror:
+    name: Update mirrors
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Cache PyPI packages
+        uses: actions/cache@v2
+        env:
+          cache-name: pip-cache
+        with:
+          path: .cache/pip
+          key: ${{ runner.os }}-mirror-${{ env.cache-name }}-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-mirror-${{ env.cache-name }}-
+            ${{ runner.os }}-mirror-
+            ${{ runner.os }}-
+
+      - name: Cache octave converted git repository
+        uses: actions/cache@v2
+        env:
+          cache-name: git-cache
+        with:
+          path: octave
+          key: ${{ runner.os }}-mirror-${{ env.cache-name }}-${{ hashFiles('*.sh') }}
+          restore-keys: |
+            ${{ runner.os }}-mirror-${{ env.cache-name }}-
+            ${{ runner.os }}-mirror-
+            ${{ runner.os }}-
+
+      - name: Install dependencies
+        run: sudo apt install libcurl4-gnutls-dev libpcre2-dev python3-dev zlib1g-dev
+
+      - name: Initialize
+        run: ./init.sh
+
+      - name: Pull
+        run: ./pull.sh
