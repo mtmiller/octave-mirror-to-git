@@ -24,5 +24,4 @@ fi
 git -C octave fetch --tags tags
 
 git -C octave fsck
-git -C octave repack -a -d -f
-git -C octave gc
+git -C octave gc --aggressive
